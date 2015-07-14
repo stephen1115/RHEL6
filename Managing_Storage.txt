@@ -1,0 +1,64 @@
+PV階段
+1. 檢查有無PV在系統上有以下三個指令
+   # pvscan
+   PV /dev/sda2   VG vg_server   lvm2 [10.00 GiB / 0    free]
+   PV /dev/sda3   VG vg_server   lvm2 [10.00 GiB / 3.00 GiB free]
+   Total: 2 [19.99 GiB] / in use: 2 [19.99 GiB] / in no VG: 0 [0   ]
+          整體PV的量    / 已經被使用到VG中的量  / 剩餘PV的量
+   
+   # pvdisplay 
+     詳細列出系統上每個PV的個別資訊
+
+   # pvs
+     顯示較精簡的PV資訊
+2. PV的name其實就是partition的裝置名稱
+3. pvcreate /dev/sda[n]
+   將/dev/sda[3] 建成為PV
+
+VG階段
+1. 檢查系統上的VG有以下三個指令
+   # vgscan
+   # vgdisplay
+     詳細列出系統上每個VG的個別資訊，每個VG資訊的最後3行為PE能使用的狀況。
+   # vgs
+
+2. # vgcreate -s N[M/G/T] VGNAME PVNAME
+                  ^^^^^^^指定PV的大小，單位是M/G/T，未指定則預設為4MB。
+3. # pvscan
+   檢查PV是否被VG用掉了
+
+4. # vgdisplay
+
+Extend a Logical Volume
+1. 確認current size
+   # df -h
+2. 確認VG中是否有足夠PE可以extend
+   # vgdisplay vgname
+3. extend logical volume
+   +--------------------------------------+----------------------------------+ 
+   | # lvextend -L 1G /dev/vgname/lvname  | -L 後面接的是實際的HDD空間大小   |
+   |            -L +1G /dev/vgname/lvname | -L 1G ==> LV 延伸後的大小為 1G   |
+   |                                      | -L +1G ==> 額外再增加1G的空間    |
+   +--------------------------------------+----------------------------------+ 
+   | # lvextend -l 64 /dev/vgname/lvname  | -l 後面接的是PE的個數            |
+   |            -l +64 /dev/vgname/lvname | -l 64 ==> LV延伸後的大小為64個PE |
+   |                                      | -l +64 ==> 額外再增加64個PE      |
+   +--------------------------------------+----------------------------------+ 
+4. # resize2fs -p /dev/vgname/lvname
+
+Reduce a Logical Volume
+縮小LV必須按以下五個步驟執行，缺一不可。
+1. 確認LV上已掛載的目錄，將其卸載。
+   # umount [Directory Path]
+2. 要縮小LV空間，強制檢查File system data structure 是必要的動作，不可少。
+   # fsck -f /dev/vgname/lvname
+3. resize2fs -p /dev/vgname/lvname 512M
+   將File system的空間resize成總大小為512M的空間。
+4. lvreduce -L 512M /dev/vgname/lvname
+5. # mount -a
+
+
+
+
+
+

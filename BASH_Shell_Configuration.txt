@@ -1,0 +1,17 @@
+Bash Shell 使用環境說明
+1. 環境配置檔
+   1.1. 系統設定值
+        1.1.1. /etc/profile
+               1.1.1.1. 設定重要變數如：
+                        PATH、USER、MAIL、HOSTNAME、HISTSIZE、umask；
+               1.1.1.2. 規劃 /etc/inputrc 鍵盤熱鍵的設定；
+        1.1.2. /etc/bashrc
+               規劃 umask 的功能，及提示字元 PS1 的內容。
+        1.1.3. /etc/profile.d/
+               目錄裡的檔案針對 bash 及 C-shell 規範了一些資料。 
+               例如 alias 規範值。
+        1.1.4. /etc/man.config
+               規定下達指令 man 之設定，例如：變數 MANPATH 規定 man page 時，會依
+               據 MANPATH 的路徑分別搜尋。
+
+   1.2. 使用者個人設定值
