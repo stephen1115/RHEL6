@@ -1,0 +1,9 @@
+Unit 12. Administer Users and Groups
+
+User and Group Administration
+1. A graphical tool, User Manager(also known as system-config-users) which can 
+   be used to manually administer local user accounts.
+2. How do you access the Users and Groups management utility?
+   2.1. # system-config-users &
+   2.2. or Select the System -> Administration -> Users and Groups menu item 
+        from the GNOME desktop menus.
