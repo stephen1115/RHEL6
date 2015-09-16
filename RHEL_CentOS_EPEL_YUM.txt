@@ -1,0 +1,31 @@
+RedHat/CentOS 使用EPEL Repo
+
+RedHat系列的Linux（如 RHEL、CentOS 與 Scientific Linux 等）可
+以透過 EPEL Repo 來安裝一些官方沒有收錄的軟體。
+EPEL（Extra Packages for Enterprise Linux）是一個由
+Fedora Special Interest Group 社群所維護的套件庫，其主要目的是
+提供各種企業級的 Linux 一些額外的高品質套件，這個套件庫可用於 
+Red Hat Enterprise Linux（RHEL）、CentOS 與 
+Scientific Linux（SL）等。
+
+若想要使用 EPEL，可以直接下載它的 rpm 套件安裝。除了rpm 之外，
+亦可使用 yum 安裝。
+sudo yum -y install epel-release
+
+若要列出所有的套件庫（repository），可以使用
+yum repolist
+或是
+yum -v repolist | less
+若要列出所有 EPEL 中的套件，可以使用
+yum --disablerepo="*" --enablerepo="epel" list available
+
+若要搜尋 EPEL 中的套件，可以使用
+yum --disablerepo="*" --enablerepo="epel" search package_name
+其中 package_name 是要搜尋的套件名稱。例如若要搜尋 nginx 套件，則使用
+yum --disablerepo="*" --enablerepo="epel" search nginx
+
+若要安裝 EPEL 中的套件，則可以使用
+yum --disablerepo="*" --enablerepo="epel" install nginx
+
+上面這些 yum 指令都加上 --disablerepo="*" 與 --enablerepo="epel" 這兩個參數，意思是停用所有其他的套件庫，只使用 EPEL，如果你不在意系統使用哪一個套件庫，你也可以直接使用一般的方式來安裝軟體，例如：
+yum install nginx
