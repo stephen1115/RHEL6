@@ -1,0 +1,44 @@
+RPM 安裝／更新／移除 軟件包
+
+RPM 是 Redhat 的軟件管理系統, 全寫是 Redhat Package Manager, Redhat, 
+Fedora 及 CentOS 等可以透過 RPM 簡單安裝, 移除及更新套件。
+以下是 RPM 操作的一些常見用法:
+
+查詢軟件包
+  顯示所有已安裝軟件
+  rpm -qa
+  
+  可以從軟件包安裝清單中過濾特定字串，方便找出想要找的軟件包
+  rpm -qa | grep <package name>
+
+  查看指定軟件包的安裝資訊
+  rpm -qi <package name>
+ 
+  查看軟件包所安裝的檔案及其位置
+  rpm -ql <package name>
+
+  查詢常用參數說明
+  -l  列出所查詢的軟件包所有檔案的安裝路徑
+  -a  顯示所有已經安裝的軟件包清單，可以使用grep過濾指定字串
+  -c  列出軟件包配置文件的安裝路徑
+  -d  列出軟件包說明文件的安裝路徑
+  -i  查詢軟件包的安裝資訊
+
+安裝軟件包
+  安裝 <package name>.rpm, 並在顯示安裝的資訊及安裝進度。
+  rpm -ivh <package name>.rpm
+
+  在安裝及升級時, rpm 預設會檢查相依性, 雖然可以用 
+  –nodeps (忽略相依性) 及 –force (強制安裝) 繞過, 但不建議
+  這樣做, 因為存在相依性問題, 套件安裝後不肯定可以正常運作。
+ 
+  參數說明
+  -i  在系統中安裝軟件包
+  -v  顯示安裝過程
+  -h  顯示安裝進度
+
+  rpm -ivh 是最簡單的安裝方式，但有時是因為不是root而對安裝的目錄沒有權限，
+  可以使用 -relocate 參數重新指定安裝的目錄
+
+  rpm -i --relocate /usr/bin=/home/easy/xxx --relocate /usr/share/doc=/home/easy/doc <package name>
+
